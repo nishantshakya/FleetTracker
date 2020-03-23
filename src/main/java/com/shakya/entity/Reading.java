@@ -1,11 +1,9 @@
 package com.shakya.entity;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 
 @IdClass(ReadingPK.class)
 @Entity
@@ -26,6 +24,17 @@ public class Reading {
     private float engineRpm;
     @Embedded
     private Tire tires;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Alert> alerts;
+
+    public List<Alert> getAlerts() {
+        return alerts;
+    }
+
+    public void setAlerts(List<Alert> alerts) {
+        this.alerts = alerts;
+    }
 
     public String getVin() {
         return vin;
@@ -138,6 +147,7 @@ public class Reading {
                 ", cruiseControlOn=" + cruiseControlOn +
                 ", engineRpm=" + engineRpm +
                 ", tires=" + tires +
+                ", alerts=" + alerts +
                 '}';
     }
 }

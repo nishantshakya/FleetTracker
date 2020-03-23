@@ -16,8 +16,6 @@ public class ReadingController {
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Reading save(@RequestBody Reading reading){
-
-        System.out.println("reading = " + reading);
         return readingService.save(reading);
     }
 

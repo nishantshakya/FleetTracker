@@ -13,7 +13,7 @@ public class Vehicle {
     private String make;
     private String model;
     private int year;
-    private float redLineRpm;
+    private float redlineRpm;
     private float maxFuelVolume;
 
     public String getVin() {
@@ -56,12 +56,12 @@ public class Vehicle {
         this.year = year;
     }
 
-    public float getRedLineRpm() {
-        return redLineRpm;
+    public float getRedlineRpm() {
+        return redlineRpm;
     }
 
-    public void setRedLineRpm(float redLineRpm) {
-        this.redLineRpm = redLineRpm;
+    public void setRedlineRpm(float redLineRpm) {
+        this.redlineRpm = redLineRpm;
     }
 
     public float getMaxFuelVolume() {
@@ -80,7 +80,7 @@ public class Vehicle {
                 ", make='" + make + '\'' +
                 ", model='" + model + '\'' +
                 ", year=" + year +
-                ", redLineRpm=" + redLineRpm +
+                ", redLineRpm=" + redlineRpm +
                 ", maxFuelVolume=" + maxFuelVolume +
                 '}';
     }
