@@ -2,16 +2,13 @@ package com.shakya.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import java.sql.Timestamp;
 
-@IdClass(VehiclePK.class)
 @Entity
 public class Vehicle {
 
     @Id
     private String vin;
-    @Id
     private Timestamp lastServiceDate;
     private String make;
     private String model;
