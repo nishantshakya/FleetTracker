@@ -2,19 +2,22 @@ package com.shakya.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import java.sql.Timestamp;
 
+@IdClass(VehiclePK.class)
 @Entity
 public class Vehicle {
 
     @Id
     private String vin;
+    @Id
+    private Timestamp lastServiceDate;
     private String make;
     private String model;
     private int year;
-    private int redLineRpm;
-    private int maxFuelVolume;
-    private Timestamp lastServiceDate;
+    private float redLineRpm;
+    private float maxFuelVolume;
 
     public String getVin() {
         return vin;
@@ -22,6 +25,14 @@ public class Vehicle {
 
     public void setVin(String vin) {
         this.vin = vin;
+    }
+
+    public Timestamp getLastServiceDate() {
+        return lastServiceDate;
+    }
+
+    public void setLastServiceDate(Timestamp lastServiceDate) {
+        this.lastServiceDate = lastServiceDate;
     }
 
     public String getMake() {
@@ -48,40 +59,32 @@ public class Vehicle {
         this.year = year;
     }
 
-    public int getRedLineRpm() {
+    public float getRedLineRpm() {
         return redLineRpm;
     }
 
-    public void setRedLineRpm(int redLineRpm) {
+    public void setRedLineRpm(float redLineRpm) {
         this.redLineRpm = redLineRpm;
     }
 
-    public int getMaxFuelVolume() {
+    public float getMaxFuelVolume() {
         return maxFuelVolume;
     }
 
-    public void setMaxFuelVolume(int maxFuelVolume) {
+    public void setMaxFuelVolume(float maxFuelVolume) {
         this.maxFuelVolume = maxFuelVolume;
-    }
-
-    public Timestamp getLastServiceDate() {
-        return lastServiceDate;
-    }
-
-    public void setLastServiceDate(Timestamp lastServiceDate) {
-        this.lastServiceDate = lastServiceDate;
     }
 
     @Override
     public String toString() {
         return "Vehicle{" +
                 "vin='" + vin + '\'' +
+                ", lastServiceDate=" + lastServiceDate +
                 ", make='" + make + '\'' +
                 ", model='" + model + '\'' +
                 ", year=" + year +
                 ", redLineRpm=" + redLineRpm +
                 ", maxFuelVolume=" + maxFuelVolume +
-                ", lastServiceDate=" + lastServiceDate +
                 '}';
     }
 }
