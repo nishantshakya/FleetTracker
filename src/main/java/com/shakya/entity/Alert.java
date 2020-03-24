@@ -1,13 +1,19 @@
 package com.shakya.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.shakya.views.Views;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.UUID;
 
+@JsonView(Views.Alerts.class)
 @Entity
 public class Alert {
 
     @Id
+    @JsonIgnore
     private String id;
     private Integer priority;
     private String description;
