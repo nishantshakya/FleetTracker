@@ -39,6 +39,10 @@ public class AlertServiceImpl implements AlertService {
             facts.put("reading", reading);
             facts.put("alerts", alerts);
             rulesEngine.fire(rules, facts);
+            if (!alerts.isEmpty())
+                reading.setHasAlerts(true);
+            else
+                reading.setHasAlerts(false);
             reading.setAlerts(alerts);
         }
     }

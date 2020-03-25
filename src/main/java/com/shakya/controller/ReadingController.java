@@ -38,6 +38,7 @@ public class ReadingController {
     @GetMapping(value = "alerts/search", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Reading> findHistoricalAlerts(@RequestParam Map<String, Object> requestParams){
         ReadingSpecification readingSpecification = readingSpecificationObjectFactory.getObject();
+        readingSpecification.add(new SearchCriteria("hasAlerts", true, SearchOperation.EQUAL));
         Sort sort = Sort.by("vin");
         if (requestParams.containsKey("priority"))
             readingSpecification.add(new SearchCriteria("priority",  requestParams.get("priority"), SearchOperation.EQUAL));
