@@ -6,7 +6,7 @@ import com.shakya.views.Views;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @IdClass(ReadingPK.class)
@@ -16,9 +16,11 @@ public class Reading {
     @Id
     @JsonView(Views.Location.class)
     private String vin;
+
     @Id
     @JsonView(Views.Location.class)
-    private Timestamp timestamp;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timestamp;
 
     @JsonView(Views.Location.class)
     private BigDecimal latitude;
@@ -185,11 +187,12 @@ public class Reading {
         this.vin = vin;
     }
 
-    public Timestamp getTimestamp() {
+
+    public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 

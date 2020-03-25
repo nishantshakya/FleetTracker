@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -26,8 +27,8 @@ public class ReadingServiceImpl implements ReadingService {
     }
 
     @Override
-    public List<Reading> findByVin(String vin) {
-        return readingRepository.findByVin(vin);
+    public List<Reading> findAllByVin(String vin) {
+        return readingRepository.findAllByVin(vin);
     }
 
     @Override
@@ -35,9 +36,9 @@ public class ReadingServiceImpl implements ReadingService {
         return readingRepository.findAll(specification, sort);
     }
 
-//    @Override
-//    public List<Reading> findByPriority(Integer priority) {
-//        return readingRepository.findByAlerts_Priority(priority);
-//    }
+    @Override
+    public List<Reading> findAllByVinAndTimestampAfter(String vin, Date before) {
+        return readingRepository.findAllByVinAndTimestampAfter(vin, before);
+    }
 
 }

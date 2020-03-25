@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Component
@@ -41,9 +42,11 @@ public class ReadingSpecification implements Specification<Reading> {
         List<Predicate> predicates = new ArrayList<>();
 
         for (SearchCriteria criteria : list) {
-             if (criteria.getOperation().equals(SearchOperation.LESS_THAN_EQUAL)) {
-                predicates.add(builder.lessThanOrEqualTo(
-                        root.get(criteria.getKey()), criteria.getValue().toString()));
+             if (criteria.getOperation().equals(SearchOperation.GREATER_THAN_EQUAL)) {
+                 Calendar before = Calendar.getInstance();
+                 before.add(Calendar.HOUR_OF_DAY, - Integer.parseInt((String) criteria.getValue()));
+                 predicates.add(builder.greaterThanOrEqualTo(
+                        root.get(criteria.getKey()), before.getTime()));
             }else if (criteria.getKey().equals("priority")){
                  Join<Reading, Alert> readingAlertJoin = root.join("alerts");
                  predicates.add(builder.equal(readingAlertJoin.get("priority"), criteria.getValue()));

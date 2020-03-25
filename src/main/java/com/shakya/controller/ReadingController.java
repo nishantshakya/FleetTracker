@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +43,8 @@ public class ReadingController {
             readingSpecification.add(new SearchCriteria("priority",  requestParams.get("priority"), SearchOperation.EQUAL));
         if (requestParams.containsKey("vin"))
             readingSpecification.add(new SearchCriteria("vin", requestParams.get("vin"), SearchOperation.EQUAL));
+        if (requestParams.containsKey("hours"))
+            readingSpecification.add(new SearchCriteria("timestamp", requestParams.get("hours"), SearchOperation.GREATER_THAN_EQUAL));
         if (requestParams.containsKey("sort"))
             sort = Sort.by((String) requestParams.get("sort"));
         if (requestParams.containsKey("order") && requestParams.get("order").toString().equalsIgnoreCase("desc"))
@@ -53,6 +56,12 @@ public class ReadingController {
     @JsonView(Views.Location.class)
     @GetMapping(value = "location/search", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Reading> findLocations(@RequestParam("vin") String vin, @RequestParam Map<String, String> requestParams){
-        return readingService.findByVin(vin);
+        if (requestParams.containsKey("minutes")){
+            Calendar before = Calendar.getInstance();
+            before.add(Calendar.MINUTE, - Integer.parseInt(requestParams.get("minutes")));
+            return readingService.findAllByVinAndTimestampAfter(vin, before.getTime());
+        }else{
+            return readingService.findAllByVin(vin);
+        }
     }
 }

@@ -1,14 +1,18 @@
 package com.shakya.entity;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Objects;
 
 @Embeddable
 public class ReadingPK implements Serializable{
     private String vin;
-    private Timestamp timestamp;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timestamp;
 
     public String getVin() {
         return vin;
@@ -18,11 +22,11 @@ public class ReadingPK implements Serializable{
         this.vin = vin;
     }
 
-    public Timestamp getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 
