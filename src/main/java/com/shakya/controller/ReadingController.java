@@ -7,6 +7,10 @@ import com.shakya.repository.specs.SearchCriteria;
 import com.shakya.repository.specs.SearchOperation;
 import com.shakya.service.ReadingService;
 import com.shakya.views.Views;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -20,6 +24,7 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "readings")
+@Api(tags = {"Vehicle Readings Endpoints to get Vehicle Historical Readings and Critical Alerts"})
 public class ReadingController {
 
     @Autowired
@@ -36,6 +41,14 @@ public class ReadingController {
     //JSON views vs JPA projections
     @JsonView(Views.Alerts.class)
     @GetMapping(value = "alerts/search", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Find all Vehicle Alerts",
+            notes = "Returns a list of Vehicles Alerts"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
     public List<Reading> findHistoricalAlerts(@RequestParam Map<String, Object> requestParams){
         ReadingSpecification readingSpecification = readingSpecificationObjectFactory.getObject();
         readingSpecification.add(new SearchCriteria("hasAlerts", true, SearchOperation.EQUAL));
@@ -56,6 +69,14 @@ public class ReadingController {
     //JSON views vs JPA projections
     @JsonView(Views.Location.class)
     @GetMapping(value = "location/search", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Find vehicle's locations within certain minutes",
+            notes = "Returns a list of vehicle's location within certain minutes"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
     public List<Reading> findLocations(@RequestParam("vin") String vin, @RequestParam Map<String, String> requestParams){
         if (requestParams.containsKey("minutes")){
             Calendar before = Calendar.getInstance();

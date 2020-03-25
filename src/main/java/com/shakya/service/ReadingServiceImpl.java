@@ -1,6 +1,7 @@
 package com.shakya.service;
 
 import com.shakya.entity.Reading;
+import com.shakya.exception.ResourceNotFoundException;
 import com.shakya.repository.ReadingRepository;
 import com.shakya.repository.specs.ReadingSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,19 +27,33 @@ public class ReadingServiceImpl implements ReadingService {
         return readingRepository.save(reading);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Reading> findAllByVin(String vin) {
-        return readingRepository.findAllByVin(vin);
+        List<Reading> existing = readingRepository.findAllByVin(vin);
+        if (existing.isEmpty()) {
+            throw new ResourceNotFoundException("No Readings found for vehicle with vin: " + vin);
+        }
+        return existing;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Reading> findAll(ReadingSpecification specification, Sort sort) {
-        return readingRepository.findAll(specification, sort);
+        List<Reading> existing = readingRepository.findAll(specification, sort);
+        if (existing.isEmpty()) {
+            throw new ResourceNotFoundException("No Readings found for given parameters");
+        }
+        return existing;
     }
-
+    @Transactional(readOnly = true)
     @Override
     public List<Reading> findAllByVinAndTimestampAfter(String vin, Date before) {
-        return readingRepository.findAllByVinAndTimestampAfter(vin, before);
+        List<Reading> existing = readingRepository.findAllByVinAndTimestampAfter(vin, before);
+        if (existing.isEmpty()) {
+            throw new ResourceNotFoundException("No Readings found for vehicle with vin: " + vin + " for the given parameter");
+        }
+        return existing;
     }
 
 }
